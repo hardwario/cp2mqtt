@@ -1,0 +1,6 @@
+click>=6.7
+PyYAML>=3.13
+pyzmq>=17.1.2
+schema>=0.6
+paho-mqtt>=1.4
+simplejson>=3.16
