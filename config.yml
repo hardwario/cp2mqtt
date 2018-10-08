@@ -1,0 +1,8 @@
+zmq:
+  host: localhost
+  port: 5680
+  timeout: 5000
+mqtt:
+  host: localhost
+  port: 1883
+  topic: node/$id/recv
