@@ -20,6 +20,39 @@ Update config.yml and run
 cp2mqtt -c config.yml
 ```
 
+### Systemd
+
+Insert this snippet to the file /lib/systemd/system/cp2mqtt.service:
+```
+[Unit]
+Description=COOPER cp2mqtt
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+ExecStart=/usr/local/bin/cp2mqtt -c /etc/cooper/cp2mqtt.yml
+Restart=always
+RestartSec=5
+StartLimitIntervalSec=0
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Start the service:
+
+    sudo systemctl start cp2mqtt.service
+
+Enable the service start on boot:
+
+    sudo systemctl enable cp2mqtt.service
+
+View the service log:
+
+    journalctl -u cp2mqtt.service -f
+
+
 ## License
 
 This project is licensed under the [**MIT License**](https://opensource.org/licenses/MIT/) - see the [**LICENSE**](LICENSE) file for details.
