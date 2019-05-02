@@ -3,6 +3,7 @@
 [![Travis](https://img.shields.io/travis/hardwario/cp2mqtt/master.svg)](https://travis-ci.org/hardwario/cp2mqtt)
 [![Release](https://img.shields.io/github/release/hardwario/cp2mqtt.svg)](https://github.com/hardwario/cp2mqtt/releases)
 [![License](https://img.shields.io/github/license/hardwario/cp2mqtt.svg)](https://github.com/hardwario/cp2mqtt/blob/master/LICENSE)
+[![PyPI](https://img.shields.io/pypi/v/cp2mqtt.svg)](https://pypi.org/project/cp2mqtt/)
 
 ## Installing
 
