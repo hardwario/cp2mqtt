@@ -52,6 +52,7 @@ schema = Schema({
         Optional('cafile'): os.path.exists,
         Optional('certfile'): os.path.exists,
         Optional('keyfile'): os.path.exists,
+        Optional('remove-key'): [str]
     },
     Optional('log'): dict
 })
