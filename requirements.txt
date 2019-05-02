@@ -1,5 +1,5 @@
-click>=6.7
-PyYAML>=3.13
+click>=7.0
+PyYAML>=5.1
 pyzmq>=17.1.2
 schema>=0.6
 paho-mqtt>=1.4

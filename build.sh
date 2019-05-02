@@ -54,7 +54,7 @@ fi
 
 ls -lha
 
-set_version cp2mqtt/app.py
+set_version cp2mqtt/__init__.py
 set_version setup.py
 
 python3 setup.py sdist

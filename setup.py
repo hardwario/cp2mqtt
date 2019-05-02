@@ -1,30 +1,41 @@
-from setuptools import setup
+import setuptools
 
-setup(
-    name='cp2mqtt',
-    packages=['cp2mqtt'],
+with open('requirements.txt', 'r') as f:
+    requirements = f.read()
+
+with open('README.md', 'r') as f:
+    long_description = f.read()
+
+name = 'cp2mqtt'
+
+setuptools.setup(
+    name=name,
     version='@@VERSION@@',
-    description='COOPER to MQTT',
-    url='https://github.com/hardwario/cp2mqtt',
     author='HARDWARIO s.r.o.',
     author_email='ask@hardwario.com',
+    description='COOPER to MQTT',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    url='https://github.com/hardwario/cp2mqtt',
     license='MIT',
-    keywords = ['cooper', 'mqtt', 'zmq', 'iot'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3.5',
-        'Topic :: Scientific/Engineering :: Human Machine Interfaces',
         'Environment :: Console',
-        'Intended Audience :: Science/Research'
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Natural Language :: English',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 3',
+        'Topic :: Utilities'
     ],
-    install_requires=[
-        'click>=6.7', 'PyYAML>=3.13','pyzmq>=17.1','schema>=0.6', 'paho-mqtt>=1.4', 'simplejson>=3.16'
-    ],
-    entry_points='''
-        [console_scripts]
-        cp2mqtt=cp2mqtt.app:main
-    '''
+    keywords='cooper influxdb iot',
+    platforms='any',
+    packages=setuptools.find_packages(),
+    install_requires=requirements,
+    entry_points={
+        'console_scripts': [
+            '%s=%s:main' % (name, name)
+        ]
+    }
 )
+
