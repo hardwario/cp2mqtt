@@ -59,7 +59,7 @@ schema = Schema({
 
 
 def load_config(config_file):
-    config = yaml.safe_load(config_file)
+    config = yaml.load(config_file, Loader=yaml.SafeLoader)
     try:
         config = schema.validate(config)
     except SchemaError as e:
