@@ -57,11 +57,5 @@ python3 -m pip install -r requirements-dev.txt 2>&1 \
 einfo 'Test codestyle'
 python3 -m pycodestyle --ignore=E501 cp2mqtt
 
-# einfo 'Test parse config.yml'
-# tmpfile=$(mktemp)
-# cat config.yml | sed "s/connection_string:/connection_string: test/g" > $tmpfile
-# python3 -c 'from cp2mqtt import app;app.main()' -c $tmpfile --test
-# rm $tmpfile
-
-einfo 'Test setup.py'
-python3 setup.py test
+einfo 'Test parse config.yml'
+python3 -m cp2mqtt -c config.yml --test 1>/dev/null
