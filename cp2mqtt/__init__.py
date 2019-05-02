@@ -65,27 +65,36 @@ def run(config):
     cmqtt.connect_async(config['mqtt']['host'], config['mqtt']['port'], keepalive=10)
     cmqtt.loop_start()
 
+    remove_key = config['mqtt'].get('remove-key', None)
+
     while True:
         try:
             payload = sock.recv_json()
             logging.debug("Recv %s", payload)
-            topic = config['mqtt']['topic'].replace("$id", payload['id'])
+            topic = config['mqtt']['topic']
+            topic = topic.replace("$id", payload['id'])
+            topic = topic.replace("$type", payload['type'])
+
+            if remove_key:
+                for key in remove_key:
+                    payload.pop(key, None)
+
             cmqtt.publish(topic, json.dumps(payload, use_decimal=True))
         except Exception:
             logging.error('Unhandled exception', exc_info=True)
 
 
 def _on_mqtt_connect(client, userdata, flags, rc):
-        logging.info('Connected to MQTT broker with code %s', rc)
+    logging.info('Connected to MQTT broker with code %s', rc)
 
-        lut = {paho.mqtt.client.CONNACK_REFUSED_PROTOCOL_VERSION: 'incorrect protocol version',
-               paho.mqtt.client.CONNACK_REFUSED_IDENTIFIER_REJECTED: 'invalid client identifier',
-               paho.mqtt.client.CONNACK_REFUSED_SERVER_UNAVAILABLE: 'server unavailable',
-               paho.mqtt.client.CONNACK_REFUSED_BAD_USERNAME_PASSWORD: 'bad username or password',
-               paho.mqtt.client.CONNACK_REFUSED_NOT_AUTHORIZED: 'not authorised'}
+    lut = {paho.mqtt.client.CONNACK_REFUSED_PROTOCOL_VERSION: 'incorrect protocol version',
+           paho.mqtt.client.CONNACK_REFUSED_IDENTIFIER_REJECTED: 'invalid client identifier',
+           paho.mqtt.client.CONNACK_REFUSED_SERVER_UNAVAILABLE: 'server unavailable',
+           paho.mqtt.client.CONNACK_REFUSED_BAD_USERNAME_PASSWORD: 'bad username or password',
+           paho.mqtt.client.CONNACK_REFUSED_NOT_AUTHORIZED: 'not authorised'}
 
-        if rc != paho.mqtt.client.CONNACK_ACCEPTED:
-            logging.error('Connection refused from reason: %s', lut.get(rc, 'unknown code'))
+    if rc != paho.mqtt.client.CONNACK_ACCEPTED:
+        logging.error('Connection refused from reason: %s', lut.get(rc, 'unknown code'))
 
 
 def _on_mqtt_disconnect(client, userdata, rc):
@@ -100,7 +109,3 @@ def main():
     except Exception as e:
         click.echo(str(e), err=True)
         sys.exit(1)
-
-
-if __name__ == '__main__':
-    main()
