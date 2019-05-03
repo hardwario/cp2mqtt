@@ -65,7 +65,7 @@ def run(config):
     cmqtt.connect_async(config['mqtt']['host'], config['mqtt']['port'], keepalive=10)
     cmqtt.loop_start()
 
-    remove_key = config['mqtt'].get('remove-key', None)
+    strip_key = config['mqtt'].get('strip', None)
 
     while True:
         try:
@@ -75,8 +75,8 @@ def run(config):
             topic = topic.replace("$id", payload['id'])
             topic = topic.replace("$type", payload['type'])
 
-            if remove_key:
-                for key in remove_key:
+            if strip_key:
+                for key in strip_key:
                     payload.pop(key, None)
 
             cmqtt.publish(topic, json.dumps(payload, use_decimal=True))
