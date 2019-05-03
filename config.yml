@@ -5,6 +5,7 @@ zmq:
 mqtt:
   host: localhost
   port: 1883
-  topic: node/$id/$type
-  remove-key:
+  topic: sensor/$id/$type
+  strip:
     - type
+    - id
